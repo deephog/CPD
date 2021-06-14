@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 
-from HolisticAttention import HA
-from ResNet import B2_ResNet
+from model.HolisticAttention import HA
+from model.ResNet import B2_ResNet
 
 
 class BasicConv2d(nn.Module):

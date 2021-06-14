@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-from HolisticAttention import HA
-from vgg import B2_VGG
+from model.HolisticAttention import HA
+from model.vgg import B2_VGG
 
 
 class RFB(nn.Module):
@@ -122,12 +122,12 @@ class CPD_VGG(nn.Module):
         x5_1 = self.rfb5_1(x5_1)
         attention = self.agg1(x5_1, x4_1, x3_1)
 
-        x3_2 = self.HA(attention.sigmoid(), x3)
-        x4_2 = self.vgg.conv4_2(x3_2)
-        x5_2 = self.vgg.conv5_2(x4_2)
-        x3_2 = self.rfb3_2(x3_2)
-        x4_2 = self.rfb4_2(x4_2)
-        x5_2 = self.rfb5_2(x5_2)
-        detection = self.agg2(x5_2, x4_2, x3_2)
+        # x3_2 = self.HA(attention.sigmoid(), x3)
+        # x4_2 = self.vgg.conv4_2(x3_2)
+        # x5_2 = self.vgg.conv5_2(x4_2)
+        # x3_2 = self.rfb3_2(x3_2)
+        # x4_2 = self.rfb4_2(x4_2)
+        # x5_2 = self.rfb5_2(x5_2)
+        # detection = self.agg2(x5_2, x4_2, x3_2)
 
-        return self.upsample(attention), self.upsample(detection)
+        return self.upsample(attention) #self.upsample(detection),

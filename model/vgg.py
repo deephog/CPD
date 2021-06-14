@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-
+import torchvision.models as models
 
 class B2_VGG(nn.Module):
     # VGG16 with two branches
@@ -71,8 +71,9 @@ class B2_VGG(nn.Module):
         conv5_2.add_module('conv5_3_2', nn.Conv2d(512, 512, 3, 1, 1))
         conv5_2.add_module('relu5_3_2', nn.ReLU())
         self.conv5_2 = conv5_2
+        temp = models.vgg16(pretrained=True)
+        pre_train = torch.load('/home/hypevr/.cache/torch/hub/checkpoints/vgg16-397923af.pth')
 
-        pre_train = torch.load('~/.torch/models/vgg16-397923af.pth')
         self._initialize_weights(pre_train)
 
     def forward(self, x):
@@ -86,7 +87,7 @@ class B2_VGG(nn.Module):
         return x1, x2
 
     def _initialize_weights(self, pre_train):
-        keys = pre_train.keys()
+        keys = list(pre_train)#pre_train.keys()
         self.conv1.conv1_1.weight.data.copy_(pre_train[keys[0]])
         self.conv1.conv1_2.weight.data.copy_(pre_train[keys[2]])
         self.conv2.conv2_1.weight.data.copy_(pre_train[keys[4]])
